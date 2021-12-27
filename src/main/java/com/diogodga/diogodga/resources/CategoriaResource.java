@@ -1,4 +1,4 @@
-package com.diogodga.diogodga.com.resources;
+package com.diogodga.diogodga.resources;
 
 import com.diogodga.diogodga.domain.Categoria;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +15,8 @@ public class CategoriaResource {
     @GetMapping
     public List<Categoria> listar(){
 
-        Categoria cat1 = new Categoria(1,"Informática");
-        Categoria cat2 = new Categoria(1, "Escritório");
+        Categoria cat1 = new Categoria(null,"Informática");
+        Categoria cat2 = new Categoria(null, "Escritório");
 
         List<Categoria> lista = new ArrayList<>();
 
