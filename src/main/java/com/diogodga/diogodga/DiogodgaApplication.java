@@ -1,6 +1,7 @@
 package com.diogodga.diogodga;
 
 import com.diogodga.diogodga.domain.*;
+import com.diogodga.diogodga.domain.enums.EstadoPagamento;
 import com.diogodga.diogodga.domain.enums.TipoCliente;
 import com.diogodga.diogodga.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -31,12 +34,18 @@ public class DiogodgaApplication implements CommandLineRunner {
 	@Autowired
 	private Enderecoepository enderecoepository;
 
+	@Autowired
+	private PedidoRepository pedidoRepository;
+
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(DiogodgaApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws ParseException {
 
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
@@ -84,5 +93,23 @@ public class DiogodgaApplication implements CommandLineRunner {
 
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoepository.saveAll(Arrays.asList(e1, e2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli2, e2);
+
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+
+		ped1.setPagamento(pagto1);
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().add(ped1);
+		cli2.getPedidos().add(ped2);
+
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
 	}
 }
