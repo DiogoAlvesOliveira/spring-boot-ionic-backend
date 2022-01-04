@@ -1,8 +1,12 @@
 package com.diogodga.diogodga;
 
 import com.diogodga.diogodga.domain.Categoria;
+import com.diogodga.diogodga.domain.Cidade;
+import com.diogodga.diogodga.domain.Estado;
 import com.diogodga.diogodga.domain.Produto;
 import com.diogodga.diogodga.repositories.CategoriaRepository;
+import com.diogodga.diogodga.repositories.CidadeRepository;
+import com.diogodga.diogodga.repositories.EstadoRepository;
 import com.diogodga.diogodga.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +23,12 @@ public class DiogodgaApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DiogodgaApplication.class, args);
@@ -43,6 +53,19 @@ public class DiogodgaApplication implements CommandLineRunner {
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+
+		Estado est1 = new Estado(null, "Pernambuco");
+		Estado est2 = new Estado(null, "Ceara");
+
+		Cidade c1 = new Cidade(null, "Recife", est1);
+		Cidade c2 = new Cidade(null, "Fortaleza", est2);
+		Cidade c3 = new Cidade(null, "Olinda", est1);
+
+		est1.getCidades().addAll(Arrays.asList(c1, c3));
+		est2.getCidades().add(c2);
+
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 	}
 }
