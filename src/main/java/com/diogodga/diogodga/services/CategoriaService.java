@@ -2,8 +2,10 @@ package com.diogodga.diogodga.services;
 
 import com.diogodga.diogodga.domain.Categoria;
 import com.diogodga.diogodga.repositories.CategoriaRepository;
+import com.diogodga.diogodga.services.exceptions.DataIntegrityException;
 import com.diogodga.diogodga.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,5 +29,14 @@ public class CategoriaService {
     public Categoria update(Categoria obj){
         find(obj.getId());
         return categoriaRepository.save(obj);
+    }
+
+    public void delete(Integer id ){
+        find(id);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possível excluir categoria que possui pedidos");
+        }
     }
 }
