@@ -1,6 +1,7 @@
 package com.diogodga.diogodga.services;
 
 import com.diogodga.diogodga.domain.Categoria;
+import com.diogodga.diogodga.domain.Cliente;
 import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.repositories.CategoriaRepository;
 import com.diogodga.diogodga.services.exceptions.DataIntegrityException;
@@ -35,8 +36,13 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria obj){
-        find(obj.getId());
-        return categoriaRepository.save(obj);
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
+        return categoriaRepository.save(newObj);
+    }
+
+    private void updateData(Categoria newObj, Categoria obj) {
+        newObj.setName(obj.getName());
     }
 
     public void delete(Integer id ){
