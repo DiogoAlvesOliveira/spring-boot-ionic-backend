@@ -32,7 +32,7 @@ public class DiogodgaApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private Enderecoepository enderecoepository;
+	private EnderecoRepository enderecoRepository;
 
 	@Autowired
 	private PedidoRepository pedidoRepository;
@@ -100,7 +100,7 @@ public class DiogodgaApplication implements CommandLineRunner {
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-		enderecoepository.saveAll(Arrays.asList(e1, e2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
