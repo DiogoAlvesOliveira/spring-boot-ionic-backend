@@ -1,6 +1,8 @@
 package com.diogodga.diogodga.config;
 
 import com.diogodga.diogodga.services.DBService;
+import com.diogodga.diogodga.services.EmailService;
+import com.diogodga.diogodga.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,4 +26,9 @@ public class DevConfig {
         dbService.instantiateTestDatabaase();
         return true;
     }
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
+    }
+
 }
