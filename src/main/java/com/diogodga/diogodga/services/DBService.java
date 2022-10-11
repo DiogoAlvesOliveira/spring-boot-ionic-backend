@@ -2,9 +2,11 @@ package com.diogodga.diogodga.services;
 
 import com.diogodga.diogodga.domain.*;
 import com.diogodga.diogodga.domain.enums.EstadoPagamento;
+import com.diogodga.diogodga.domain.enums.Perfil;
 import com.diogodga.diogodga.domain.enums.TipoCliente;
 import com.diogodga.diogodga.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -14,6 +16,8 @@ import java.util.Arrays;
 @Service
 public class DBService {
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private CategoriaRepository categoriaRepository;
 
@@ -100,8 +104,9 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "diogo.dream89@gmail.com", "12345678912", TipoCliente.PESSOAFISICA);
-        Cliente cli2 = new Cliente(null, "Jose Silva", "jose@gmail.com", "12345678912", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "diogo.dream89@gmail.com", "12345678912", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123456"));
+        Cliente cli2 = new Cliente(null, "Jose Silva", "diogo.dga.oliveira@gmail.com", "12345678912", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123456"));
+        cli2.addPerfil(Perfil.ADMIN);
 
         cli1.getTelefones().addAll(Arrays.asList("555555555","66666666666"));
         cli2.getTelefones().addAll(Arrays.asList("555555555","66666666666"));
