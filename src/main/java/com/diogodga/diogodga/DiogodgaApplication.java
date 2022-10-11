@@ -9,11 +9,11 @@ import java.text.ParseException;
 @SpringBootApplication
 public class DiogodgaApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DiogodgaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DiogodgaApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws ParseException {
-	}
+    @Override
+    public void run(String... args) throws ParseException {
+    }
 }
