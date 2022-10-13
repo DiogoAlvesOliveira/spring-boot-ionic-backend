@@ -3,11 +3,14 @@ package com.diogodga.diogodga.services;
 import com.diogodga.diogodga.domain.Cidade;
 import com.diogodga.diogodga.domain.Cliente;
 import com.diogodga.diogodga.domain.Endereco;
+import com.diogodga.diogodga.domain.enums.Perfil;
 import com.diogodga.diogodga.domain.enums.TipoCliente;
 import com.diogodga.diogodga.dto.ClienteDTO;
 import com.diogodga.diogodga.dto.ClienteNewDTO;
 import com.diogodga.diogodga.repositories.ClienteRepository;
 import com.diogodga.diogodga.repositories.EnderecoRepository;
+import com.diogodga.diogodga.security.UserSS;
+import com.diogodga.diogodga.services.exceptions.AuthorizationException;
 import com.diogodga.diogodga.services.exceptions.DataIntegrityException;
 import com.diogodga.diogodga.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,12 @@ public class ClienteService {
     }
 
     public Cliente find(Integer id) {
+
+        UserSS user = UserService.authenticated();
+        if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
