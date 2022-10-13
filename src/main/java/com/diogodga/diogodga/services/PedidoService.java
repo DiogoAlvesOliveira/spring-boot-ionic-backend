@@ -1,5 +1,6 @@
 package com.diogodga.diogodga.services;
 
+import com.diogodga.diogodga.domain.Cliente;
 import com.diogodga.diogodga.domain.ItemPedido;
 import com.diogodga.diogodga.domain.PagamentoComBoleto;
 import com.diogodga.diogodga.domain.Pedido;
@@ -7,8 +8,13 @@ import com.diogodga.diogodga.domain.enums.EstadoPagamento;
 import com.diogodga.diogodga.repositories.ItemPedidoRepository;
 import com.diogodga.diogodga.repositories.PagamentoRepository;
 import com.diogodga.diogodga.repositories.PedidoRepository;
+import com.diogodga.diogodga.security.UserSS;
+import com.diogodga.diogodga.services.exceptions.AuthorizationException;
 import com.diogodga.diogodga.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,5 +72,14 @@ public class PedidoService {
         itemPedidoRepository.saveAll(obj.getItens());
         emailService.sendOrderConfirmationHtmlEmail(obj);
         return obj;
+    }
+    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        UserSS user = UserService.authenticated();
+        if (user == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        Cliente cliente =  clienteService.find(user.getId());
+        return pedidoRepository.findByCliente(cliente, pageRequest);
     }
 }

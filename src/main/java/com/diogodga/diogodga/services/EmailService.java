@@ -1,5 +1,6 @@
 package com.diogodga.diogodga.services;
 
+import com.diogodga.diogodga.domain.Cliente;
 import com.diogodga.diogodga.domain.Pedido;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -14,4 +15,6 @@ public interface EmailService {
     void sendOrderConfirmationHtmlEmail(Pedido obj);
 
     void sendHtmlEmail(MimeMessage msg);
+
+    void sendNewPasswordEmail(Cliente cliente, String newPass);
 }
