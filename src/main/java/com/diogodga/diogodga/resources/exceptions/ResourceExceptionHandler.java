@@ -2,8 +2,12 @@ package com.diogodga.diogodga.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.diogodga.diogodga.services.exceptions.AuthorizationException;
 import com.diogodga.diogodga.services.exceptions.DataIntegrityException;
+import com.diogodga.diogodga.services.exceptions.FileException;
 import com.diogodga.diogodga.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +50,7 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 
-   /* @ExceptionHandler(FileException.class)
+   @ExceptionHandler(FileException.class)
     public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
 
         StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro de arquivo", e.getMessage(), request.getRequestURI());
@@ -73,5 +77,5 @@ public class ResourceExceptionHandler {
 
         StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro S3", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-    }*/
+    }
 }
