@@ -53,6 +53,12 @@ public class ClienteResource {
         clienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value="/email")
+    public ResponseEntity<Cliente> findByEmail(@RequestParam(value="value") String email) {
+        Cliente obj = clienteService.findByEmail(email);
+        return ResponseEntity.ok().body(obj);
+    }
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<ClienteDTO>> findPage(
