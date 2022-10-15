@@ -6,6 +6,7 @@ import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.dto.ClienteDTO;
 import com.diogodga.diogodga.dto.ClienteNewDTO;
 import com.diogodga.diogodga.services.ClienteService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ClienteResource {
     @Autowired
     private ClienteService clienteService;
 
+    @ApiOperation(value="Retorna todos clientes")
     @GetMapping()
     public ResponseEntity<List<ClienteDTO>> findAll(){
         List<Cliente> list = clienteService.findAll();
@@ -34,11 +36,13 @@ public class ClienteResource {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value="Busca por id")
     public ResponseEntity<Cliente> find(@PathVariable Integer id){
         Cliente obj = clienteService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @ApiOperation(value="Atualiza cliente")
     @PutMapping(value = "/{id}")
     public ResponseEntity<Cliente> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id){
         Cliente obj = clienteService.fromDTO(objDto);
@@ -48,18 +52,21 @@ public class ClienteResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Remove cliente")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Cliente> delete (@PathVariable Integer id){
         clienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value="Busca cliente por email")
     @GetMapping(value="/email")
     public ResponseEntity<Cliente> findByEmail(@RequestParam(value="value") String email) {
         Cliente obj = clienteService.findByEmail(email);
         return ResponseEntity.ok().body(obj);
     }
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Retorna todos clientes com paginação")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<ClienteDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -72,6 +79,7 @@ public class ClienteResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Insere cliente")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
         Cliente obj = clienteService.fromDTO(objDto);
@@ -79,6 +87,8 @@ public class ClienteResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @ApiOperation(value="Insere imagem perfil do cliente")
     @PostMapping(value="/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
         URI uri = clienteService.uploadProfilePicture(file);

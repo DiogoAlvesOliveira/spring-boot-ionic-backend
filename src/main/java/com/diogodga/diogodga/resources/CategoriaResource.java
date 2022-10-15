@@ -3,6 +3,9 @@ package com.diogodga.diogodga.resources;
 import com.diogodga.diogodga.domain.Categoria;
 import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.services.CategoriaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ public class CategoriaResource {
     @Autowired
     private CategoriaService categoriaService;
 
+    @ApiOperation(value="Retorna todas categorias")
     @GetMapping()
     public ResponseEntity<List<CategoriaDTO>> findAll(){
         List<Categoria> list = categoriaService.findAll();
@@ -29,12 +33,14 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(listDto);
     }
     @GetMapping(value = "/{id}")
+    @ApiOperation(value="Busca por id")
     public ResponseEntity<Categoria> find(@PathVariable Integer id){
         Categoria obj = categoriaService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Insere categoria")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
         Categoria obj = categoriaService.fromDTO(objDto);
@@ -44,6 +50,7 @@ public class CategoriaResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Atualiza categoria")
     @PutMapping(value = "/{id}")
     public ResponseEntity<Categoria> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
         Categoria obj = categoriaService.fromDTO(objDto);
@@ -53,11 +60,17 @@ public class CategoriaResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value="Remove categoria")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+            @ApiResponse(code = 404, message = "Código inexistente") })
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Categoria> delete (@PathVariable Integer id){
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @ApiOperation(value="Retorna todas categorias com paginação")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<CategoriaDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

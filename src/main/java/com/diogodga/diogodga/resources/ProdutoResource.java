@@ -4,6 +4,7 @@ import com.diogodga.diogodga.domain.Produto;
 import com.diogodga.diogodga.dto.ProdutoDTO;
 import com.diogodga.diogodga.resources.utils.URL;
 import com.diogodga.diogodga.services.ProdutoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,13 @@ public class ProdutoResource {
     @Autowired
     private ProdutoService produtoService;
     @GetMapping(value = "/{id}")
+    @ApiOperation(value="Busca por id")
     public ResponseEntity<Produto> find(@PathVariable Integer id){
         Produto obj = produtoService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @ApiOperation(value="Retorna todos produtos com paginação")
     @GetMapping
     public ResponseEntity<Page<ProdutoDTO>> findPage(
             @RequestParam(value="nome", defaultValue="") String nome,

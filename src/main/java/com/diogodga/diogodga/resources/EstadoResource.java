@@ -9,6 +9,7 @@ import com.diogodga.diogodga.dto.CidadeDTO;
 import com.diogodga.diogodga.dto.EstadoDTO;
 import com.diogodga.diogodga.services.CidadeService;
 import com.diogodga.diogodga.services.EstadoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class EstadoResource {
     @Autowired
     private CidadeService cidadeService;
 
+    @ApiOperation(value="Retorna todos estados")
     @GetMapping()
     public ResponseEntity<List<EstadoDTO>> findAll() {
         List<Estado> list = service.findAll();
@@ -30,6 +32,7 @@ public class EstadoResource {
         return ResponseEntity.ok().body(listDto);
     }
 
+    @ApiOperation(value="Retorna todas cidades do estado")
     @GetMapping(value="/{estadoId}/cidades")
     public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Integer estadoId) {
         List<Cidade> list = cidadeService.findByEstado(estadoId);

@@ -4,6 +4,7 @@ import com.diogodga.diogodga.domain.Categoria;
 import com.diogodga.diogodga.domain.Pedido;
 import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.services.PedidoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,13 @@ public class PedidoResource {
     @Autowired
     private PedidoService pedidoService;
     @GetMapping(value = "/{id}")
+    @ApiOperation(value="Busca por id")
     public ResponseEntity<Pedido> find(@PathVariable Integer id){
         Pedido obj = pedidoService.find(id);
         return ResponseEntity.ok().body(obj);
     }
+
+    @ApiOperation(value="Insere pedido")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
         obj = pedidoService.insert(obj);
@@ -31,6 +35,7 @@ public class PedidoResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value="Retorna todos peidos com paginação")
     @GetMapping()
     public ResponseEntity<Page<Pedido>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
