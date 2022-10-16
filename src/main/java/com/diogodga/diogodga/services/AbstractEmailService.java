@@ -16,7 +16,7 @@ import java.util.Date;
 
 public abstract class AbstractEmailService implements EmailService{
 
-    @Value("${spring.mail.username}")
+    @Value("${default.sender}")
     private String sender;
 
     @Autowired
