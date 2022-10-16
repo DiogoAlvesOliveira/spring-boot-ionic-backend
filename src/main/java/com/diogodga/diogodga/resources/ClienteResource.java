@@ -80,7 +80,7 @@ public class ClienteResource {
         return ResponseEntity.ok().body(listDto);
     }
 
-    //@PreAuthorize("hasAnyRole('ADMIN')") comentado para realizar testes
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ApiOperation(value="Insere cliente")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){

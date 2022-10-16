@@ -42,7 +42,7 @@ public class Cliente implements Serializable {
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
-        addPerfis(Perfil.ADMIN);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Cliente(Integer id, String name, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
@@ -52,7 +52,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo == null) ? null : tipo.getCod();
         this.senha = senha;
-        addPerfis(Perfil.ADMIN);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Integer getId() {
