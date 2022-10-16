@@ -10,13 +10,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.mail.internet.MimeMessage;
 
-public class SmtpEmailService extends AbstractEmailService{
+public class SmtpEmailService extends AbstractEmailService {
 
     @Autowired
-    MailSender mailSender;
-
-    @Autowired
-    JavaMailSender javaMailSender;
+    private MailSender mailSender;
 
     private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
 
@@ -24,13 +21,6 @@ public class SmtpEmailService extends AbstractEmailService{
     public void sendEmail(SimpleMailMessage msg) {
         LOG.info("Enviando email...");
         mailSender.send(msg);
-        LOG.info("Email enviado");
-    }
-
-    @Override
-    public void sendHtmlEmail(MimeMessage msg) {
-        LOG.info("Enviando email HTML...");
-        javaMailSender.send(msg);
         LOG.info("Email enviado");
     }
 }
