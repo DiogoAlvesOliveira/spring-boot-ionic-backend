@@ -6,6 +6,7 @@ import com.diogodga.diogodga.domain.Cliente;
 import com.diogodga.diogodga.repositories.ClienteRepository;
 import com.diogodga.diogodga.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
