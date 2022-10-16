@@ -3,6 +3,7 @@ package com.diogodga.diogodga.resources;
 import com.diogodga.diogodga.domain.Categoria;
 import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.services.CategoriaService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
+@Api( tags = "Categorias")
 public class CategoriaResource {
 
     @Autowired

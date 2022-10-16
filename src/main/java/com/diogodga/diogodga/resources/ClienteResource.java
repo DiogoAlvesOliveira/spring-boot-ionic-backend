@@ -6,6 +6,7 @@ import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.dto.ClienteDTO;
 import com.diogodga.diogodga.dto.ClienteNewDTO;
 import com.diogodga.diogodga.services.ClienteService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/clientes")
+@Api( tags = "Clientes")
 public class ClienteResource {
 
     @Autowired

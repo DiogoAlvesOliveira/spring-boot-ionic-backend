@@ -8,12 +8,14 @@ import com.diogodga.diogodga.security.JWTUtil;
 import com.diogodga.diogodga.security.UserSS;
 import com.diogodga.diogodga.services.AuthService;
 import com.diogodga.diogodga.services.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api( tags = "Autorização")
 @RequestMapping(value = "/auth")
 public class AuthResource {
 

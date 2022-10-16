@@ -4,6 +4,7 @@ import com.diogodga.diogodga.domain.Produto;
 import com.diogodga.diogodga.dto.ProdutoDTO;
 import com.diogodga.diogodga.resources.utils.URL;
 import com.diogodga.diogodga.services.ProdutoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/produtos")
+@Api( tags = "Produtos")
 public class ProdutoResource {
 
     @Autowired

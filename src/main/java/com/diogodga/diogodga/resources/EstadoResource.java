@@ -9,6 +9,7 @@ import com.diogodga.diogodga.dto.CidadeDTO;
 import com.diogodga.diogodga.dto.EstadoDTO;
 import com.diogodga.diogodga.services.CidadeService;
 import com.diogodga.diogodga.services.EstadoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/estados")
+@Api( tags = "Estados")
 public class EstadoResource {
 
     @Autowired

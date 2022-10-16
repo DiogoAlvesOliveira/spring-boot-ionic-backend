@@ -4,6 +4,7 @@ import com.diogodga.diogodga.domain.Categoria;
 import com.diogodga.diogodga.domain.Pedido;
 import com.diogodga.diogodga.dto.CategoriaDTO;
 import com.diogodga.diogodga.services.PedidoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/pedidos")
+@Api( tags = "Pedidos")
 public class PedidoResource {
 
     @Autowired
